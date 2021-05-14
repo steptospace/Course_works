@@ -6,3 +6,5 @@ client_sock.sendall(b'3420!')
 data = client_sock.recv(1024)
 client_sock.close()
 print('Received', repr(data))
+
+
