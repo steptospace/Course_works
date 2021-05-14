@@ -49,7 +49,6 @@ def decrypt_message(encrypted_message, private_key):
     :param private_key: <object> private_key
     :return: <object> Message decripted with private_key
 
-
     """
 
     cipher = PKCS1_OAEP.new(private_key)
