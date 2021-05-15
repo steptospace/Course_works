@@ -1,6 +1,10 @@
 from Cryptodome.PublicKey import RSA
+from Cryptodome.Cipher import AES
 from Cryptodome.Hash import SHA256
 from Cryptodome.Cipher import PKCS1_OAEP
+from Cryptodome.Random import get_random_bytes
+import random
+
 
 # Напишем функцию для генерации ключей
 def generate_keys(bits=2048):
@@ -35,9 +39,16 @@ def decrypt_message(encrypted_message, private_key):
     decrypted_message = cipher.decrypt(encrypted_message)
     print(decrypted_message)
 
-def encryp_hash (messages): # check this moment and be careful messages only STRING !!!
+
+def encrypt_hash(messages):  # check this moment and be careful messages only STRING !!!
     data_hash = SHA256.new(messages.encode())
     return data_hash
 
-#decrypt_message(encrypt_message(message, public_key),private_key) ok correctly work
+
+def gen_session_key():
+    key = get_random_bytes(32)
+    print(key.hex())
+    return key.hex()
+
+# decrypt_message(encrypt_message(message, public_key),private_key) ok correctly work
 
