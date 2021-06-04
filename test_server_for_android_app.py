@@ -41,11 +41,13 @@ def generate_keys(bits=2048):
 
 private_key, public_key = generate_keys(bits=2048)
 
+"""
 print(private_key.exportKey(format='PEM').decode())
 print('\n')
 print('#'*65)
 print('\n')
 print(public_key.exportKey(format='PEM').decode())
+"""
 
 private_key, public_key = generate_keys(bits = 2048)
 
@@ -104,6 +106,12 @@ while (True):
     dummy = conn.recv(100)
     print("REST INFO:")
     print(dummy)
+
+    #Генерация хешей подписи
     passport_info = dummy.decode("utf-8")
     print(passport_info.split("\n"))
     elem_info = passport_info.split("\n")
+    hash_elem_string = elem_info[0:10]
+    signed_1 = h.update(hash_elem_string)
+    byte_hash_signed_1 = h.hexdigest().encode()
+    print(h.hexdigest())
