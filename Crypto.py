@@ -23,6 +23,7 @@ print('\n')
 print(public_key.exportKey(format='PEM').decode())
 '''
 message = b'Hello world!'
+session_mess = bytes(41)
 messages = "Hello fkng world "
 
 
@@ -38,6 +39,7 @@ def decrypt_message(encrypted_message, private_key):
     cipher = PKCS1_OAEP.new(private_key)
     decrypted_message = cipher.decrypt(encrypted_message)
     print(decrypted_message)
+    return decrypted_message
 
 
 def encrypt_hash(messages):  # check this moment and be careful messages only STRING !!!
@@ -47,8 +49,18 @@ def encrypt_hash(messages):  # check this moment and be careful messages only ST
 
 def gen_session_key():
     key = get_random_bytes(32)
-    print(key.hex())
-    return key.hex()
+    return key
 
-# decrypt_message(encrypt_message(message, public_key),private_key) ok correctly work
+
+def decrypt_message_aes(cipher, tag, session_key, nonce):
+    cipher_aes = AES.new(session_key, AES.MODE_EAX, nonce)
+    return cipher_aes.decrypt_and_verify(cipher, tag).decode("utf-8")
+
+
+def encrypt_message_aes(data, session_key, client_sock):
+    cipher_aes = AES.new(session_key, AES.MODE_EAX)
+    ciphertext, tag = cipher_aes.encrypt_and_digest(data)
+    client_sock.sendall(ciphertext)
+    client_sock.sendall(cipher_aes.nonce)
+    client_sock.sendall(tag)
 
