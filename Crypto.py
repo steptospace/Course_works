@@ -37,10 +37,13 @@ def encrypt_message(message, public_key):
 
 def decrypt_message(encrypted_message, private_key):
     cipher = PKCS1_OAEP.new(private_key)
+    return cipher.decrypt(encrypted_message)
+
+def decrypt_message_from_apps(encrypted_message, private_key):
+    cipher =  PKCS1_OAEP.new(key = private_key, hashAlgo = SHA256)
     decrypted_message = cipher.decrypt(encrypted_message)
     print(decrypted_message)
     return decrypted_message
-
 
 def encrypt_hash(messages):  # check this moment and be careful messages only STRING !!!
     data_hash = SHA256.new(messages.encode())
@@ -54,7 +57,7 @@ def gen_session_key():
 
 def decrypt_message_aes(cipher, tag, session_key, nonce):
     cipher_aes = AES.new(session_key, AES.MODE_EAX, nonce)
-    return cipher_aes.decrypt_and_verify(cipher, tag).decode("utf-8")
+    return cipher_aes.decrypt_and_verify(cipher, tag)
 
 
 def encrypt_message_aes(data, session_key, client_sock):
