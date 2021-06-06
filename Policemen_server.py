@@ -2,6 +2,7 @@ import socket
 import sys
 import time
 from Cryptodome.Cipher import AES
+from PIL import Image
 import Policemen
 import Crypto
 import test_server_for_android_app
@@ -22,5 +23,9 @@ if __name__ == '__main__':
     #check signed
     if signed_2_db == signed:
         print("Correct answer: well we do that (^_^)")
+        #read the image
+        im = Image.open("Photo1.jpg")
+        #show image
+        im.show()
 
 
