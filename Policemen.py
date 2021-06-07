@@ -2,7 +2,6 @@ import socket
 from Cryptodome.Cipher import AES
 import Crypto
 
-
 def client(public_key, private_key, info_pass):
     client_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_sock.connect(('127.0.0.1', 53210))
@@ -21,6 +20,7 @@ def client(public_key, private_key, info_pass):
     data_2 = client_sock.recv(10000)  # добавил
     nonce_2 = client_sock.recv(16)  # добавил
     tag_2 = client_sock.recv(16)  # добавил 05.06
+
     hash = Crypto.decrypt_message_aes(data_2, tag_2, session_key, nonce_2)  # hash
     client_sock.close()
     print('Received', photo)
