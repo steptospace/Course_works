@@ -14,8 +14,8 @@ from base64 import b64encode
 import hashlib
 
 # Тест
-#ip = "192.168.31.151"
-ip = "192.168.0.152"
+ip = "192.168.31.151"
+#ip = "192.168.177.240"
 port = 8080
 
 # RSA
